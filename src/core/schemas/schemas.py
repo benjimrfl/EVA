@@ -33,3 +33,4 @@ class EvaluationType(str, Enum):
     three_reasons = 'three_reasons'
     wh_question = 'wh_question'
     mc = 'mc'
+    json = 'json'

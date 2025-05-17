@@ -4,7 +4,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from core.schemas import schemas
-from evaluators import three_reasons_evaluator, yn_evaluator, wh_question_evaluator, mc_evaluator
+from evaluators import three_reasons_evaluator, yn_evaluator, wh_question_evaluator, mc_evaluator, json_evaluator
 
 PREFIX = '/api/v1'
 
@@ -56,6 +56,14 @@ async def evaluate(outputs: Union[List[schemas.Output], schemas.Output], evaluat
             return result
         else:
             return mc_evaluator.evaluate_mc(outputs.prompt, outputs.expected_result, outputs.generated_result)
+    if evaluation_type == 'json':
+        if type(outputs) == list:
+            result = []
+            for output in outputs:
+                result.append(json_evaluator.evaluate_json(output.expected_result, output.generated_result))
+            return result
+        else:
+            return json_evaluator.evaluate_json(outputs.expected_result, outputs.generated_result)
 
 
 if __name__ == "__main__":
