@@ -22,6 +22,6 @@ def evaluate_json(expected_result, generated_result):
     expected_pattern = expected_result.get("pattern", "").strip().lower()
     generated_pattern = generated_result.get("pattern", "").strip().lower()
     if('method' in generated_pattern):
-        generated_pattern = generated_pattern.replace('method', '')
+        generated_pattern = generated_pattern.replace('method', '').strip()
     
     return 'pass' if expected_pattern == generated_pattern else 'fail'
